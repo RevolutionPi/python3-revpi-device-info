@@ -8,6 +8,7 @@ import sys
 from sys import stderr
 
 from revpi_device_info import RevPiDeviceInfo, RevPiHatEEPROMAttributeException
+from revpi_device_info.device_info import RevPiHatEEPROMException
 
 
 def known_attributes():
@@ -79,7 +80,7 @@ if __name__ == "__main__":
 
     try:
         device_info = RevPiDeviceInfo(hat_path=args.hat_path)
-    except RevPiHatEEPROMAttributeException as e:
+    except (RevPiHatEEPROMAttributeException, RevPiHatEEPROMException) as e:
         print(
             f"An error occured while reading the HAT contents: {e}", file=stderr)
         sys.exit(1)
