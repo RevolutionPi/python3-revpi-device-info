@@ -2,8 +2,11 @@
 from __future__ import annotations
 
 import json
+import os.path
 from datetime import date
 
+class RevPiHatEEPROMException(Exception):
+    pass
 
 class RevPiHatEEPROMAttributeException(Exception):
     pass
@@ -48,6 +51,10 @@ class RevPiDeviceInfo:
         Load values from RevPi HAT EEPROM
         :raises: RevPiHatEEPROMAttributeException: if the attribute cannot be read from HAT files
         """
+
+        if not os.path.exists(self._hat_path):
+            raise RevPiHatEEPROMException("HAT EEPROM path does not exists")
+
         self.uuid = self._hat_attribute("uuid")
         self.format_version = self._hat_attribute_int("custom_0")
 
