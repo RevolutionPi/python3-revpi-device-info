@@ -7,8 +7,8 @@ import argparse
 import sys
 from sys import stderr
 
-from revpi_device_info import RevPiDeviceInfo, RevPiHatEEPROMAttributeException
-from revpi_device_info.device_info import RevPiHatEEPROMException
+from . import RevPiDeviceInfo, RevPiHatEEPROMAttributeException
+from .device_info import RevPiHatEEPROMException
 
 
 def known_attributes():
@@ -50,7 +50,7 @@ def output_text(device_info: RevPiDeviceInfo, line_length: int = 60):
     print(f"Format Version:\t{device_info.format_version}")
 
 
-if __name__ == "__main__":
+def main() -> None:
     parser = argparse.ArgumentParser(
         description="Human readable RevPi Device Info")
 
@@ -89,3 +89,7 @@ if __name__ == "__main__":
         output_json(device_info, args.attributes)
     else:
         output_text(device_info)
+
+
+if __name__ == "__main__":
+    main()
