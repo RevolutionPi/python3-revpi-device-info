@@ -1,0 +1,25 @@
+Source: revpi-device-info
+Section: python
+Priority: optional
+Maintainer: KUNBUS GmbH <support@kunbus.com>
+Build-Depends:
+ debhelper-compat (= 12),
+ dh-python,
+ python3-all,
+ python3-setuptools,
+X-Python3-Version: >= 3.5
+Standards-Version: 4.5.0
+Homepage: https://revolutionpi.com
+Vcs-Browser: https://github.com/RevolutionPi/python3-revpi-device-info
+Vcs-Git: https://github.com/RevolutionPi/python3-revpi-device-info.git
+Rules-Requires-Root: no
+Testsuite: autopkgtest-pkg-python
+
+Package: python3-revpi-device-info
+Architecture: all
+Depends: ${python3:Depends}, ${misc:Depends}
+Description: Python3 module for RevolutionPi device information from HAT EEPROM
+ The module provides access to the RevPi HAT EEPROM which holds information like
+ serial number, product details, eol test data and more. With this module the
+ information can be used in own Python projects. There is also a CLI tool called
+ revpi-device-info which prints the data in human readable format or JSON. 
