@@ -1,3 +1,10 @@
+revpi-device-info (1.0.0-2) stable; urgency=medium
+
+  [ Zhi Han ]
+  * debian/gbp.conf: define raspios/buster as default branch
+
+ --  Zhi Han <z.han@kunbus.com>  Mon, 21 Nov 2022 16:57:14 +0100
+
 revpi-device-info (1.0.0-1) stable; urgency=medium
 
   * Initial release
