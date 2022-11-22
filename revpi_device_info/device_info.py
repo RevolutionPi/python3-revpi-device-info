@@ -26,6 +26,7 @@ class RevPiDeviceInfo:
 
         self.uuid: str = None
         self.format_version: int = None
+        self.eeprom_data_version: int = None
 
         self.vendor: str = None
         self.product: str = None
@@ -57,6 +58,7 @@ class RevPiDeviceInfo:
 
         self.uuid = self._hat_attribute("uuid")
         self.format_version = self._hat_attribute_int("custom_0")
+        self.eeprom_data_version = self._hat_attribute_int("custom_6")
 
         self.vendor = self._hat_attribute("vendor")
         self.product = self._hat_attribute("product")
