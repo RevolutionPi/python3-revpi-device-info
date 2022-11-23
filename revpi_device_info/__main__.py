@@ -31,6 +31,10 @@ def output_text(device_info: RevPiDeviceInfo, line_length: int = 60):
     print(f"Vendor:\t\t{device_info.vendor}")
     print(f"Product:\t{device_info.product}")
     print(f"Version:\t{device_info.product_version}")
+    print(f"Data Version:\t{device_info.eeprom_data_version}", end="")
+    if device_info.eeprom_data_version <= 0:
+        print(" (WARNING: THIS IS A DEVELOPMENT VERSION)", end="")
+    print()
     print(f"Id:\t\t{device_info.product_id_revision}")
 
     print()
