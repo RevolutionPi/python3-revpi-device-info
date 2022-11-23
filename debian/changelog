@@ -1,3 +1,10 @@
+revpi-device-info (1.0.1-1) UNRELEASED; urgency=medium
+
+  [ Nicolai Buchwitz ]
+  * Add eeprom_data_version
+
+ --  Zhi Han <z.han@kunbus.com>  Wed, 23 Nov 2022 17:07:15 +0100
+
 revpi-device-info (1.0.0-2) stable; urgency=medium
 
   [ Zhi Han ]
