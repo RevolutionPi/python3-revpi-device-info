@@ -1,3 +1,13 @@
+revpi-device-info (1.0.1-1) buster; urgency=medium
+
+  [ Nicolai Buchwitz ]
+  * Add eeprom_data_version
+
+  [ Philipp Rosenberger ]
+  * Fix syntax-error-in-dep5-copyright Lintian warning
+
+ -- Philipp Rosenberger <p.rosenberger@kunbus.com>  Thu, 24 Nov 2022 11:40:41 +0100
+
 revpi-device-info (1.0.0-2) stable; urgency=medium
 
   [ Zhi Han ]
