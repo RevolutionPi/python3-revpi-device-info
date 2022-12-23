@@ -70,7 +70,7 @@ class RevPiDeviceInfo:
         self.product_version_minor = self._version_minor(self.product_version)
         self.product_id_revision = f"PR{self.product_id}R{self.product_revision:02}"
 
-        self.serial = self._hat_attribute_int("custom_1")
+        self.serial = int(self._hat_attribute("custom_1"))
         self.eol_date = self._hat_attribute_date("custom_3")
         self.batch_number = self._hat_attribute_int("custom_4")
         self.first_mac_address = self._hat_attribute("custom_5")
