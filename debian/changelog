@@ -1,3 +1,10 @@
+revpi-device-info (1.0.2-1) buster; urgency=medium
+
+  [ Nicolai Buchwitz ]
+  * Fix serial number parsing
+
+ -- Sven Sager <s.sager@kunbus.com>  Mon, 02 Jan 2023 20:15:34 +0000
+
 revpi-device-info (1.0.1-1) buster; urgency=medium
 
   [ Nicolai Buchwitz ]
