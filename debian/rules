@@ -1,8 +1,4 @@
 #!/usr/bin/make -f
 
-export PYBUILD_NAME=revpi_device_info
-export PYBUILD_SYSTEM=distutils
-export PYBUILD_DISABLE=test
-
 %:
 	dh $@ --with python3 --buildsystem=pybuild
