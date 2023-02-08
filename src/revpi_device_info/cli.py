@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """Hat EEPROM device info."""
 __author__ = "Nicolai Buchwitz"
