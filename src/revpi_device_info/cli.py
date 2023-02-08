@@ -1,13 +1,13 @@
-#!/usr/bin/env python3
-
-
-from __future__ import annotations
+# -*- coding: utf-8 -*-
+"""Hat EEPROM device info."""
+__author__ = "Nicolai Buchwitz"
+__copyright__ = "Copyright (C) 2023 KUNBUS GmbH"
+__license__ = "MIT"
 
 import argparse
-import sys
 from sys import stderr
 
-from . import RevPiDeviceInfo, RevPiHatEEPROMAttributeException
+from . import RevPiDeviceInfo
 from .device_info import RevPiHatEEPROMException
 
 
@@ -54,23 +54,26 @@ def output_text(device_info: RevPiDeviceInfo, line_length: int = 60):
     print(f"Format Version:\t{device_info.format_version}")
 
 
-def main() -> None:
+def main() -> int:
     parser = argparse.ArgumentParser(
-        description="Human readable RevPi Device Info")
+        description="Human readable RevPi Device Info",
+    )
 
     parser.add_argument(
         "-p", "--hat-path",
         type=str,
         required=False,
         default="/proc/device-tree/hat/",
-        help='Override path to HAT files')
+        help='Override path to HAT files',
+    )
 
     parser.add_argument(
         "--json",
         required=False,
         action="store_true",
         default=False,
-        help="Output JSON instead of text")
+        help="Output JSON instead of text",
+    )
 
     parser.add_argument(
         "-a",
@@ -78,22 +81,26 @@ def main() -> None:
         type=str,
         action="append",
         choices=known_attributes(),
-        default=None, help="Filter JSON output for only specific attributes")
+        default=None, help="Filter JSON output for only specific attributes",
+    )
 
     args = parser.parse_args()
 
     try:
         device_info = RevPiDeviceInfo(hat_path=args.hat_path)
-    except (RevPiHatEEPROMAttributeException, RevPiHatEEPROMException) as e:
-        print(
-            f"An error occured while reading the HAT contents: {e}", file=stderr)
-        sys.exit(1)
+    except RevPiHatEEPROMException as e:
+        print(f"An error occurred while reading the HAT contents: {e}", file=stderr)
+        return 1
 
     if args.json:
         output_json(device_info, args.attributes)
     else:
         output_text(device_info)
 
+    return 0
+
 
 if __name__ == "__main__":
-    main()
+    import sys
+
+    sys.exit(main())

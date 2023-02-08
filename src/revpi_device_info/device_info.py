@@ -1,14 +1,24 @@
-
-from __future__ import annotations
+# -*- coding: utf-8 -*-
+"""Hat EEPROM device info."""
+__author__ = "Nicolai Buchwitz"
+__copyright__ = "Copyright (C) 2023 KUNBUS GmbH"
+__license__ = "MIT"
 
 import json
 import os.path
 from datetime import date
 
+
 class RevPiHatEEPROMException(Exception):
+    """Exception base of this module."""
     pass
 
-class RevPiHatEEPROMAttributeException(Exception):
+
+class RevPiHatEEPROMAttributeException(RevPiHatEEPROMException):
+    pass
+
+
+class RevPiHatEEPROMPathException(RevPiHatEEPROMException):
     pass
 
 
@@ -54,7 +64,7 @@ class RevPiDeviceInfo:
         """
 
         if not os.path.exists(self._hat_path):
-            raise RevPiHatEEPROMException("HAT EEPROM path does not exists")
+            raise RevPiHatEEPROMPathException("HAT EEPROM path does not exists")
 
         self.uuid = self._hat_attribute("uuid")
         self.format_version = self._hat_attribute_int("custom_0")
@@ -62,8 +72,7 @@ class RevPiDeviceInfo:
 
         self.vendor = self._hat_attribute("vendor")
         self.product = self._hat_attribute("product")
-        self.product_id = self._hat_attribute_int("product_id") \
-            + self.PRODUCT_ID_BASE
+        self.product_id = self._hat_attribute_int("product_id") + self.PRODUCT_ID_BASE
         self.product_revision = self._hat_attribute_int("custom_2")
         self.product_version = self._hat_attribute_version("product_ver")
         self.product_version_major = self._version_major(self.product_version)
@@ -76,19 +85,19 @@ class RevPiDeviceInfo:
         self.first_mac_address = self._hat_attribute("custom_5")
 
     def _version_major(self, version: str) -> int:
-        (major, _) = version.split(".")
+        major, _ = version.split(".")
 
         return int(major)
 
     def _version_minor(self, version: str) -> int:
-        (_, minor) = version.split(".")
+        _, minor = version.split(".")
 
         return int(minor)
 
     def _hat_attribute_version(self, name: str) -> str:
         value = self._hat_attribute_int(name)
 
-        major = int(value/100)
+        major = int(value / 100)
         minor = int(value % 100)
 
         version = f"{major}.{minor}"
@@ -134,7 +143,7 @@ class RevPiDeviceInfo:
         """
         JSON encoded attributes of the RevPi Device Infos
 
-        :param list[str]: Optional list with attributes to filter
+        :param attributes: Optional list with attributes to filter
         :return: JSON string with all / filtered attributes
         :rtype: str
         """
