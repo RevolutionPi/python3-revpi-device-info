@@ -1,4 +1,4 @@
-revpi-device-info (1.0.2-1) buster; urgency=medium
+revpi-device-info (1.0.2-1+revpi11+1) bullseye; urgency=medium
 
   [ Nicolai Buchwitz ]
   * Fix serial number parsing

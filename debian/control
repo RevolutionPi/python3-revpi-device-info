@@ -5,13 +5,13 @@ Maintainer: KUNBUS GmbH <support@kunbus.com>
 Rules-Requires-Root: no
 Homepage: https://revolutionpi.com
 Vcs-Browser: https://github.com/RevolutionPi/python3-revpi-device-info
-Vcs-Git: https://github.com/RevolutionPi/python3-revpi-device-info.git
+Vcs-Git: https://github.com/RevolutionPi/python3-revpi-device-info.git -b raspios/bullseye
 Build-Depends:
- debhelper-compat (= 12),
+ debhelper-compat (= 13),
  dh-python,
  python3-all,
  python3-setuptools,
-Standards-Version: 4.3.0
+Standards-Version: 4.5.1
 X-Python3-Version: >= 3.6
 Testsuite: autopkgtest-pkg-python
 
