@@ -1,6 +1,6 @@
 # python3-revpi-device-info
 
-Python3 library to interfact with RevPi device information
+Python3 library to interact with RevPi device information.
 
 ## Example usage
 
@@ -14,7 +14,7 @@ try:
 
     # print product name
     print(device.product)
-except revpi_device_info.RevPiHatEEPROMAttributeException as e:
-    print(f"An error occured while reading the HAT files: {e}")
+except revpi_device_info.RevPiHatEEPROMException as e:
+    print(f"An error occurred while reading the HAT files: {e}")
 
 ```
