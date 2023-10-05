@@ -1,3 +1,13 @@
+revpi-device-info (1.0.2-1+revpi12+1) bookworm; urgency=medium
+
+  [ Sven Sager ]
+  * Set upstream-branch value in gbp.conf to master
+
+  [ Nicolai Buchwitz ]
+  * Update /debian for Bookworm
+
+ -- Nicolai Buchwitz <n.buchwitz@kunbus.com>  Wed, 11 Oct 2023 08:52:03 +0200
+
 revpi-device-info (1.0.2-1+revpi11+1) bullseye; urgency=medium
 
   [ Nicolai Buchwitz ]
