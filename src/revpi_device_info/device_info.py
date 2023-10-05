@@ -14,6 +14,7 @@ from datetime import date
 
 class RevPiHatEEPROMException(Exception):
     """Exception base of this module."""
+
     pass
 
 
@@ -124,10 +125,9 @@ class RevPiDeviceInfo:
 
         try:
             with open(path, "r") as fh:
-                value = fh.read().rstrip('\x00')
+                value = fh.read().rstrip("\x00")
         except Exception as e:
-            raise RevPiHatEEPROMAttributeException(
-                f"Could not read HAT value for {name}. {e}")
+            raise RevPiHatEEPROMAttributeException(f"Could not read HAT value for {name}. {e}")
 
         # override raw value with parsed int value
         self._raw_values[name] = value

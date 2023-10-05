@@ -15,24 +15,22 @@ with open("README.md") as fh:
 setup(
     name="revpi_device_info",
     version=__version__,
-
     packages=find_namespace_packages("src"),
-    package_dir={'': 'src'},
+    package_dir={"": "src"},
     include_package_data=True,
-
     python_requires=">= 3.6",
     install_requires=[],
-    entry_points={"console_scripts": [
-        "revpi-device-info = revpi_device_info.cli:main",
-    ]},
-
+    entry_points={
+        "console_scripts": [
+            "revpi-device-info = revpi_device_info.cli:main",
+        ]
+    },
     platforms=["revolution pi"],
-
-    url='https://github.com/RevolutionPi/python3-revpi-device-info',
+    url="https://github.com/RevolutionPi/python3-revpi-device-info",
     license="LGPLv2",
     author="Nicolai Buchwitz",
     author_email="n.buchwitz@kunbus.com",
-    description='RevPi device information from RevPi HAT EEPROM',
+    description="RevPi device information from RevPi HAT EEPROM",
     long_description=long_description,
     long_description_content_type="text/markdown",
     keywords=["revpi", "revolution pi", "revpimodio", "plc", "automation"],
@@ -43,6 +41,6 @@ setup(
         "License :: OSI Approved :: MIT License",
         "Operating System :: POSIX :: Linux",
         "Programming Language :: Python :: 3",
-        "Topic :: Software Development :: Libraries :: Python Modules"
+        "Topic :: Software Development :: Libraries :: Python Modules",
     ],
 )

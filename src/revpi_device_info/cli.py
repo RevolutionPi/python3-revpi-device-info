@@ -63,11 +63,12 @@ def main() -> int:
     )
 
     parser.add_argument(
-        "-p", "--hat-path",
+        "-p",
+        "--hat-path",
         type=str,
         required=False,
         default="/proc/device-tree/hat/",
-        help='Override path to HAT files',
+        help="Override path to HAT files",
     )
 
     parser.add_argument(
@@ -84,7 +85,8 @@ def main() -> int:
         type=str,
         action="append",
         choices=known_attributes(),
-        default=None, help="Filter JSON output for only specific attributes",
+        default=None,
+        help="Filter JSON output for only specific attributes",
     )
 
     args = parser.parse_args()
