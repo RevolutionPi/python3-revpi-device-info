@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: 2023 KUNBUS GmbH
+# SPDX-FileCopyrightText: 2023-2024 KUNBUS GmbH
 #
 # SPDX-License-Identifier: MIT
 ---
@@ -12,3 +12,7 @@ include:
       - if: $CI_COMMIT_BRANCH =~ /^raspios\/.*/
       - exists:
           - debian/gitlab-ci.yml
+  - project: "revolutionpi/infrastructure/ci-templates"
+    file: "check-commit/lint-commit.yml"
+  - project: "revolutionpi/infrastructure/ci-templates"
+    file: "reuse-lint.yml"
