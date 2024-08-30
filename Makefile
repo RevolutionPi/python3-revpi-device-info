@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2023 KUNBUS GmbH
+#
+# SPDX-License-Identifier: MIT
+
 SHELL        := bash
 MAKEFLAGS     = --no-print-directory --no-builtin-rules
 .DEFAULT_GOAL = all

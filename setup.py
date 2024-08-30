@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2022-2023 KUNBUS GmbH
+#
+# SPDX-License-Identifier: MIT
+
 # -*- coding: utf-8 -*-
 """Setup-script for revpi-device-info."""
 __author__ = "Sven Sager"

@@ -1,6 +1,6 @@
-# -*- coding: utf-8 -*-
+# SPDX-FileCopyrightText: 2022-2023 KUNBUS GmbH
+#
 # SPDX-License-Identifier: MIT
-# Copyright 2022-2023 KUNBUS GmbH
 
 """Hat EEPROM device info."""
 __author__ = "Nicolai Buchwitz"

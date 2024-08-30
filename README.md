@@ -1,3 +1,8 @@
+<!--
+SPDX-FileCopyrightText: 2022-2023 KUNBUS GmbH
+
+SPDX-License-Identifier: MIT
+-->
 <details>
 <summary>We have moved to GitLab! Read this for more information.</summary>
 

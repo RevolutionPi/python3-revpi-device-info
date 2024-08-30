@@ -1,6 +1,6 @@
-# -*- coding: utf-8 -*-
+# SPDX-FileCopyrightText: 2023 KUNBUS GmbH
+#
 # SPDX-License-Identifier: MIT
-# Copyright 2022-2023 KUNBUS GmbH
 
 """Metadata of package."""
 __author__ = "Nicolai Buchwitz"

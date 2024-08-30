@@ -1,6 +1,6 @@
-# -*- coding: utf-8 -*-
+# SPDX-FileCopyrightText: 2022-2023 KUNBUS GmbH
+#
 # SPDX-License-Identifier: MIT
-# Copyright 2022-2023 KUNBUS GmbH
 
 """Start main application of this package."""
 __author__ = "Sven Sager"
