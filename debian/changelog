@@ -1,3 +1,9 @@
+revpi-device-info (1.0.2-2+deb13+1) trixie; urgency=medium
+
+  * Initial release for trixie
+
+ -- Sven Sager <s.sager@kunbus.com>  Mon, 08 Dec 2025 11:40:48 +0100
+
 revpi-device-info (1.0.2-1+revpi12+1) bookworm; urgency=medium
 
   [ Sven Sager ]
