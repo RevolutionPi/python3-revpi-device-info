@@ -46,7 +46,7 @@ def output_text(device_info: RevPiDeviceInfo, line_length: int = 60):
     print(line(line_length))
     print(f"Serial:\t\t{device_info.serial}")
     print(f"First MAC:\t{device_info.first_mac_address}")
-    print(f"EOL Date:\t{device_info.eol_date}")
+    print(f"Test Date:\t{device_info.eol_date}")
     print(f"Batch / Lot:\t{device_info.batch_number}")
 
     print()
