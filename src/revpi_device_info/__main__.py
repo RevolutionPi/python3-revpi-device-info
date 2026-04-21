@@ -3,6 +3,7 @@
 # SPDX-License-Identifier: MIT
 
 """Start main application of this package."""
+
 __author__ = "Sven Sager"
 __copyright__ = "Copyright (C) 2023 KUNBUS GmbH"
 __license__ = "MIT"

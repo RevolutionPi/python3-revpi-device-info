@@ -4,6 +4,7 @@
 
 # -*- coding: utf-8 -*-
 """Setup-script for revpi-device-info."""
+
 __author__ = "Sven Sager"
 __copyright__ = "Copyright (C) 2023 KUNBUS GmbH"
 __license__ = "MIT"
