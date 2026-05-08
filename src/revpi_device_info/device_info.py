@@ -10,7 +10,12 @@ __license__ = "MIT"
 
 import json
 import os.path
+import platform
 from datetime import date
+import logging
+from typing import Optional, Dict
+
+logger = logging.getLogger(__name__)
 
 
 class RevPiHatEEPROMException(Exception):
@@ -20,56 +25,173 @@ class RevPiHatEEPROMException(Exception):
 
 
 class RevPiHatEEPROMAttributeException(RevPiHatEEPROMException):
+    """Exception raised when HAT EEPROM attribute could not be read."""
+
     pass
 
 
 class RevPiHatEEPROMPathException(RevPiHatEEPROMException):
+    """Exception raised when HAT EEPROM path does not exist."""
+
+    pass
+
+
+class RevPiDeviceInfoException(RevPiHatEEPROMException):
+    """Exception raised when device info could not be read."""
+
+    pass
+
+
+class RevPiSystemInfoException(RevPiHatEEPROMException):
+    """Exception raised when system info could not be read."""
+
     pass
 
 
 class RevPiDeviceInfo:
+    """
+    Represents device information for a Revolution Pi (RevPi).
+
+    The class provides utilities for reading RevPi-specific hardware and software
+    information, including attributes stored in the RevPi HAT EEPROM and system files.
+    It allows for loading device-specific data, accessing raw attributes, and exporting
+    data to JSON format.
+
+    Attributes
+    ----------
+    uuid:
+        UUID of the RevPi device.
+    format_version:
+        Format version of the HAT EEPROM data.
+    eeprom_data_version:
+        Data version of the HAT EEPROM.
+    vendor:
+        Vendor name as specified in the HAT EEPROM file.
+    product:
+        Product name as specified in the HAT EEPROM file.
+    product_id:
+        Product ID derived from HAT EEPROM file and base offset.
+    product_id_revision:
+        Product ID with revision ("PR<id>R<rev>").
+    product_revision:
+        Revision number of the product.
+    product_version:
+        Version of the product (major.minor).
+    product_version_major:
+        Major version of the product.
+    product_version_minor:
+        Minor version of the product.
+    serial:
+        Serial number of the RevPi device.
+    eol_date:
+        End-of-line date for the device.
+    batch_number:
+        Batch number of the device.
+    first_mac_address:
+        First MAC address associated with the device.
+    architecture:
+        System architecture as identified by the platform.
+    os_version:
+        Operating system version.
+    """
+
     PRODUCT_ID_BASE = 100000
 
-    def __init__(self, load_contents: bool = True, hat_path: str = "/proc/device-tree/hat/") -> None:
+    def __init__(
+        self,
+        load_contents: bool = True,
+        hat_path: str = "/proc/device-tree/hat",
+        devinfo_path: str = "/usr/share/revpi/devinfo",
+        os_release_path: str = "/etc/os-release",
+    ) -> None:
         """
-        Create new instance of RevPiDeviceInfo.
+        Create a new instance of RevPiDeviceInfo.
 
-        :param bool load_contents: Populate class with data from RevPi Hat EEPROM
-        :param str hat_path: Path to HAT files
+        Parameters
+        ----------
+        load_contents:
+            Populate class with data from RevPi Hat EEPROM
+        hat_path:
+            Path to HAT EEPROM files
+        devinfo_path:
+            Path to devinfo files
+        os_release_path:
+            Path to os-release file
         """
         self._hat_path = hat_path
+        self._devinfo_path = devinfo_path
+        self._os_release_path = os_release_path
+        """Path to os-release file."""
 
-        self.uuid: str = None
-        self.format_version: int = None
-        self.eeprom_data_version: int = None
+        self.uuid: Optional[str] = None
+        self.format_version: Optional[int] = None
+        self.eeprom_data_version: Optional[int] = None
 
-        self.vendor: str = None
-        self.product: str = None
-        self.product_id: int = None
-        self.product_id_revision: str = None
-        self.product_revision: int = None
-        self.product_version: str = None
-        self.product_version_major: int = None
-        self.product_version_minor: int = None
+        self.vendor: Optional[str] = None
+        self.product: Optional[str] = None
+        self.product_id: Optional[int] = None
+        self.product_id_revision: Optional[str] = None
+        self.product_revision: Optional[int] = None
+        self.product_version: Optional[str] = None
+        self.product_version_major: Optional[int] = None
+        self.product_version_minor: Optional[int] = None
 
-        self.serial: int = None
-        self.eol_date: date = None
-        self.batch_number: int = None
-        self.first_mac_address: str = None
+        self.serial: Optional[int] = None
+        self.eol_date: Optional[date] = None
+        self.batch_number: Optional[int] = None
+        self.first_mac_address: Optional[str] = None
+        self.architecture: Optional[str] = None
+        self.os_version: Optional[str] = None
 
+        self._os_release: Dict[str, str] = {}
+        """Dictionary of key-value pairs from os-release file."""
         self._raw_values = {}
 
         if load_contents:
             self.load()
 
-    def load(self):
-        """
-        Load values from RevPi HAT EEPROM
-        :raises: RevPiHatEEPROMAttributeException: if the attribute cannot be read from HAT files
-        """
+    def load(self) -> None:
+        """Load values from RevPi HAT EEPROM or system info."""
+        try:
+            self._load_system_info()
+        except RevPiSystemInfoException as e:
+            logger.warning("Could not load system info: %s", e)
 
+        if os.path.exists(self._hat_path):
+            # This RevPi has a HAT EEPROM device
+            self._load_hat_info()
+        else:
+            # Fallback to /usr/share/revpi/devinfo information
+            self._load_device_info()
+
+    def _load_system_info(self) -> None:
+        if not os.path.exists(self._os_release_path):
+            raise RevPiSystemInfoException(f"os-release path '{self._os_release_path}' does not exist")
+
+        try:
+            # Read os-release file and parse key-value pairs for self._os_release dict
+            with open(self._os_release_path, "r") as fh:
+                for line in fh:
+                    key_value = line.split("=", 1)
+                    if len(key_value) != 2:
+                        continue
+
+                    key, value = key_value
+                    # Use upper case keys to avoid case sensitivity issues
+                    key = key.strip().upper()
+                    # Remove surrounding quotes and whitespace in value
+                    value = value.strip(" \t\n\r'\"")
+
+                    self._os_release[key] = value
+        except Exception as e:
+            raise RevPiSystemInfoException(f"Could not read os-release file. {e}") from e
+
+        self.architecture = platform.machine()
+        self.os_version = self._os_release.get("PRETTY_NAME")
+
+    def _load_hat_info(self) -> None:
         if not os.path.exists(self._hat_path):
-            raise RevPiHatEEPROMPathException("HAT EEPROM path does not exists")
+            raise RevPiHatEEPROMPathException(f"HAT EEPROM path '{self._hat_path}' does not exist")
 
         self.uuid = self._hat_attribute("uuid")
         self.format_version = self._hat_attribute_int("custom_0")
@@ -88,6 +210,57 @@ class RevPiDeviceInfo:
         self.eol_date = self._hat_attribute_date("custom_3")
         self.batch_number = self._hat_attribute_int("custom_4")
         self.first_mac_address = self._hat_attribute("custom_5")
+
+    def _load_device_info(self) -> None:
+        """
+        Load device information from the device info directory.
+
+        Raises
+        ------
+        RevPiDeviceInfoException:
+            If the devinfo path does not exist, or if the attributes cannot be loaded.
+        """
+        if not os.path.exists(self._devinfo_path):
+            raise RevPiDeviceInfoException(f"devinfo path '{self._devinfo_path}' does not exist")
+
+        try:
+            self.serial = int(self._device_info_attribute("serial-number"))
+        except (RevPiDeviceInfoException, ValueError) as e:
+            logger.warning("Could not load serial number: %s", e)
+
+        try:
+            self.first_mac_address = self._device_info_attribute("base-mac-address")
+        except RevPiDeviceInfoException as e:
+            logger.warning("Could not load base MAC address: %s", e)
+
+    def _device_info_attribute(self, name: str) -> str:
+        """
+        Read attribute from /usr/share/revpi/devinfo.
+
+        An attribute is the file name in the devinfo directory.
+
+        Parameters
+        ----------
+        name: str
+            Name of the attribute (file) to read.
+
+        Returns
+        -------
+        str:
+            Stripped content of the attribute file.
+
+        Raises
+        ------
+        RevPiDeviceInfoException:
+            If the attribute file cannot be read.
+        """
+        path = os.path.join(self._devinfo_path, name)
+
+        try:
+            with open(path, "r") as fh:
+                return fh.read().strip()
+        except OSError as e:
+            raise RevPiDeviceInfoException(f"Could not read 'devinfo' file {name}. {e}") from e
 
     def _version_major(self, version: str) -> int:
         major, _ = version.split(".")
@@ -122,13 +295,13 @@ class RevPiDeviceInfo:
         return value
 
     def _hat_attribute(self, name: str) -> str:
-        path = f"{self._hat_path}/{name}"
+        path = os.path.join(self._hat_path, name)
 
         try:
             with open(path, "r") as fh:
                 value = fh.read().rstrip("\x00")
         except Exception as e:
-            raise RevPiHatEEPROMAttributeException(f"Could not read HAT value for {name}. {e}")
+            raise RevPiHatEEPROMAttributeException(f"Could not read HAT EEPROM value for {name}. {e}") from e
 
         # override raw value with parsed int value
         self._raw_values[name] = value
@@ -137,19 +310,28 @@ class RevPiDeviceInfo:
 
     def raw_values(self) -> dict:
         """
-        Get dict of (mostly) raw attributes. Only integer conversion is done to attributes where necessary
-        :return: raw attributes from the HAT files
-        :rtype: dict
+        Get dict of (mostly) raw attributes. Only integer conversion is done to attributes where necessary.
+
+        Return
+        ------
+        dict:
+            raw attributes from the HAT EEPROM files
         """
         return self._raw_values
 
     def to_json(self, attributes: list[str] = None) -> str:
         """
-        JSON encoded attributes of the RevPi Device Infos
+        JSON encoded attributes of the RevPi Device Infos.
 
-        :param attributes: Optional list with attributes to filter
-        :return: JSON string with all / filtered attributes
-        :rtype: str
+        Parameters
+        ----------
+        attributes:
+            Optional list with attributes to filter
+
+        Return
+        ------
+        str:
+            JSON string with all / filtered attributes
         """
         output = {}
 

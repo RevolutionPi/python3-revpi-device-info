@@ -28,6 +28,7 @@ Python3 library to interact with RevPi device information.
 import revpi_device_info
 
 # initialize EEPROM and load contents from default path (/proc/device-tree/hat)
+# Fallback to /usr/share/revpi/devinfo information if no HAT EEPROM is available
 try:
     device = revpi_device_info.RevPiDeviceInfo()
 
