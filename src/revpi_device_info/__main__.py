@@ -1,11 +1,11 @@
-# SPDX-FileCopyrightText: 2022-2023 KUNBUS GmbH
+# SPDX-FileCopyrightText: 2022-2026 KUNBUS GmbH
 #
 # SPDX-License-Identifier: MIT
 
 """Start main application of this package."""
 
 __author__ = "Sven Sager"
-__copyright__ = "Copyright (C) 2023 KUNBUS GmbH"
+__copyright__ = "Copyright (C) 2022-2026 KUNBUS GmbH"
 __license__ = "MIT"
 
 # If we are running from a wheel, add the wheel to sys.path

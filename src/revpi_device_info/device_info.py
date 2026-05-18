@@ -1,11 +1,11 @@
-# SPDX-FileCopyrightText: 2022-2023 KUNBUS GmbH
+# SPDX-FileCopyrightText: 2022-2026 KUNBUS GmbH
 #
 # SPDX-License-Identifier: MIT
 
 """Hat EEPROM device info."""
 
 __author__ = "Nicolai Buchwitz"
-__copyright__ = "Copyright (C) 2023 KUNBUS GmbH"
+__copyright__ = "Copyright (C) 2022-2026 KUNBUS GmbH"
 __license__ = "MIT"
 
 import json
