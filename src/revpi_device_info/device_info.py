@@ -123,6 +123,8 @@ class RevPiDeviceInfo:
         self._os_release_path = os_release_path
         """Path to os-release file."""
 
+        self.has_hat_eeprom = os.path.exists(self._hat_path)
+
         self.uuid: Optional[str] = None
         self.format_version: Optional[int] = None
         self.eeprom_data_version: Optional[int] = None
