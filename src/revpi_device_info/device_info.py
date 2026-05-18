@@ -153,15 +153,18 @@ class RevPiDeviceInfo:
     def load(self) -> None:
         """Load values from RevPi HAT EEPROM or system info."""
         try:
+            logger.debug("Loading system info from %s", self._os_release_path)
             self._load_system_info()
         except RevPiSystemInfoException as e:
             logger.warning("Could not load system info: %s", e)
 
         if os.path.exists(self._hat_path):
+            logger.info("Loading HAT EEPROM information from %s", self._hat_path)
             # This RevPi has a HAT EEPROM device
             self._load_hat_info()
         else:
             # Fallback to /usr/share/revpi/devinfo information
+            logger.info("Loading device info from %s (no HAT EEPROM available)", self._devinfo_path)
             self._load_device_info()
 
     def _load_system_info(self) -> None:
@@ -183,6 +186,9 @@ class RevPiDeviceInfo:
                     value = value.strip(" \t\n\r'\"")
 
                     self._os_release[key] = value
+
+            logger.debug("Loaded %s key-value pairs from os-release file", len(self._os_release))
+
         except Exception as e:
             raise RevPiSystemInfoException(f"Could not read os-release file. {e}") from e
 
