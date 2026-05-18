@@ -1,7 +1,10 @@
-# SPDX-FileCopyrightText: 2023-2024 KUNBUS GmbH
+# SPDX-FileCopyrightText: 2023-2026 KUNBUS GmbH
 #
 # SPDX-License-Identifier: MIT
 ---
+variables:
+  GIT_DEPTH: 100
+
 include:
   - project: "revolutionpi/infrastructure/ci-templates"
     file: "base.yml"
