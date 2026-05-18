@@ -7,4 +7,4 @@
 __author__ = "Nicolai Buchwitz"
 __copyright__ = "Copyright (C) 2023-2026 KUNBUS GmbH"
 __license__ = "MIT"
-__version__ = "1.0.3"
+__version__ = "1.1.0"
