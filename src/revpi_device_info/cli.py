@@ -109,18 +109,23 @@ def main() -> int:
         action="count",
         dest="verbose",
         default=0,
-        help="switch on verbose logging",
+        help="switch on logging on stderr",
     )
 
     args = parser.parse_args()
 
-    logging.basicConfig(
-        format="{asctime} [{levelname:8}] {message}",
-        datefmt="%Y-%m-%d %H:%M:%S",
-        style="{",
-        stream=stderr,
-        level=logging.WARNING - 10 * min(args.verbose, 3),
-    )
+    if args.verbose == 0:
+        # Disable logging
+        logging.disable(logging.CRITICAL)
+    else:
+        # Enable logging with level INFO (-v) or DEBUG (-vv)
+        logging.basicConfig(
+            format="{asctime} [{levelname:8}] {message}",
+            datefmt="%Y-%m-%d %H:%M:%S",
+            style="{",
+            stream=stderr,
+            level=logging.WARNING - 10 * min(args.verbose, 2),
+        )
 
     try:
         device_info = RevPiDeviceInfo(hat_path=args.hat_path)
