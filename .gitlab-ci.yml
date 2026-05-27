@@ -1,0 +1,22 @@
+# SPDX-FileCopyrightText: 2023-2026 KUNBUS GmbH
+#
+# SPDX-License-Identifier: MIT
+---
+variables:
+  GIT_DEPTH: 100
+
+include:
+  - project: "revolutionpi/infrastructure/ci-templates"
+    file: "base.yml"
+  - project: "revolutionpi/infrastructure/ci-templates"
+    file: "/python/linter.yml"
+  - local: debian/gitlab-ci.yml
+    rules:
+      - exists:
+          - debian/gitlab-ci.yml
+  - project: "revolutionpi/infrastructure/ci-templates"
+    file: "check-commit/lint-commit.yml"
+  - project: "revolutionpi/infrastructure/ci-templates"
+    file: "reuse-lint.yml"
+  - project: "revolutionpi/infrastructure/ci-templates"
+    file: "create-pristine-tar.yml"
