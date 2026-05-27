@@ -1,3 +1,51 @@
+revpi-device-info (1.1.0-1+deb13+1) trixie; urgency=medium
+
+  [ Sven Sager ]
+  * Clean up code and doc strings
+  * Reorder package to src-layout.
+  * Update README.md file
+
+  [ Nicolai Buchwitz ]
+  * Add SPDX headers
+
+  [ Thomas Böhler ]
+  * chore: Add move to GitLab to README
+
+  [ Nicolai Buchwitz ]
+  * ci: Add pipeline
+  * style: Use same line length for ruff
+  * style: Apply code styles
+  * refactor: Fix linter warning "unknown import"
+
+  [ Thomas Böhler ]
+  * ci: remove invalid template
+  * chore: add REUSE compliance
+  * ci: add linting for commits and reuse
+
+  [ Sven Sager ]
+  * fix: Rename "EOL Date" label to "Test Date" in CLI output
+  * chore: Execute ruff format
+
+  [ Marc Kittner ]
+  * ci: Add pristine-tar creation on source tag push
+  * ci: Remove outdated raspios branch check
+
+  [ Sven Sager ]
+  * ci: Set `GIT_DEPTH` to 100 and update copyright year
+  * chore: Add JetBrains `.idea` to .gitignore file
+
+  [ Marc Kittner ]
+  * feat: Extend device info with system and devinfo data
+
+  [ Sven Sager ]
+  * refactor: Add detailed logging for system and device info loading
+  * refactor: Adjust CLI logging behavior based on verbosity level
+  * feat: Add `has_hat_eeprom` attribute
+  * chore: Update copyright years to 2026
+  * chore: Bump version to 1.1.0
+
+ -- Marc Kittner <m.kittner@kunbus.com>  Wed, 27 May 2026 14:52:58 +0200
+
 revpi-device-info (1.0.2-2+deb13+1) trixie; urgency=medium
 
   * Initial release for trixie
