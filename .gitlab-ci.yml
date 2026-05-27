@@ -19,4 +19,6 @@ include:
   - project: "revolutionpi/infrastructure/ci-templates"
     file: "reuse-lint.yml"
   - project: "revolutionpi/infrastructure/ci-templates"
+    file: "package-devel.yml"
+  - project: "revolutionpi/infrastructure/ci-templates"
     file: "create-pristine-tar.yml"
