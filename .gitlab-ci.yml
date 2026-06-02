@@ -4,6 +4,7 @@
 ---
 variables:
   GIT_DEPTH: 100
+  SRCPKG_NAME: revpi-device-info
 
 include:
   - project: "revolutionpi/infrastructure/ci-templates"
