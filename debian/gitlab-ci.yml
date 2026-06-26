@@ -8,3 +8,8 @@ include:
   - project: "revolutionpi/infrastructure/ci-templates"
     file: "package-release-debian.yml"
 
+build-package:
+  parallel:
+    matrix:
+      - ARCH: [arm64]
+        RELEASE: bookworm
