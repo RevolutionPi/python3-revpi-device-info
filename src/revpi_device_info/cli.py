@@ -114,6 +114,10 @@ def main() -> int:
 
     args = parser.parse_args()
 
+    # Use JSON output if attributes are specified
+    if args.attributes:
+        args.json = True
+
     if args.verbose == 0:
         # Disable logging
         logging.disable(logging.CRITICAL)
